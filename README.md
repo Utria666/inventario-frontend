@@ -46,7 +46,14 @@ cd inventario-frontend
 npm install
 ```
 
-### 3. Verificar que todo esta correcto
+### 3. Configurar variables de entorno
+
+```bash
+cp .env.example .env
+# Edita .env si tu backend corre en un puerto o URL diferente
+```
+
+### 4. Verificar que todo esta correcto
 
 ```bash
 npm run build
@@ -58,32 +65,39 @@ Si el build pasa sin errores, la instalacion fue exitosa.
 
 ## Configuracion
 
-### Backend (obligatorio)
+### Variables de entorno
 
-Este frontend necesita el backend corriendo en `http://localhost:3045`. El proxy ya esta configurado en `vite.config.ts`:
+Copia el archivo de ejemplo y ajusta los valores segun tu entorno:
 
-```ts
-server: {
-  proxy: {
-    '/api': {
-      target: 'http://localhost:3045',
-      changeOrigin: true,
-    },
-  },
-}
+```bash
+cp .env.example .env
 ```
 
-> Si tu backend corre en otro puerto, cambia el valor de `target` en `vite.config.ts`.
+El archivo `.env.example` contiene las siguientes variables:
 
-### Variables de entorno (opcional)
+| Variable | Descripcion | Valor por defecto |
+|----------|-------------|-------------------|
+| `VITE_API_URL` | URL del backend (sin `/api` al final) | `http://localhost:3045` |
+| `VITE_PORT` | Puerto del frontend | `5173` |
 
-No se requieren variables de entorno para desarrollo. El proxy de Vite se encarga de redirigir las peticiones al backend.
-
-Para **produccion**, necesitaras configurar la URL del backend. Crea un archivo `.env.production`:
+#### Ejemplo para desarrollo local
 
 ```env
-VITE_API_URL=https://tu-backend-en-produccion.com/api
+VITE_API_URL=http://localhost:3045
+VITE_PORT=5173
 ```
+
+#### Ejemplo para produccion
+
+```env
+VITE_API_URL=https://mi-backend.railway.app
+```
+
+> **Nota**: En desarrollo, Vite usa un proxy para redirigir `/api` al backend (evita problemas de CORS). En produccion, el frontend apunta directamente a `VITE_API_URL/api`.
+
+### Backend (obligatorio)
+
+Este frontend necesita el backend corriendo. El backend esta en el repositorio [stock-management-api](https://github.com/Utria666/stock-management-api). Asegurate de que este corriendo antes de iniciar el frontend.
 
 ---
 

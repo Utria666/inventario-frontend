@@ -2,12 +2,18 @@ import axios, { AxiosError } from 'axios';
 import type { AxiosInstance } from 'axios';
 import type { ApiError } from '../types/models';
 
+// En desarrollo: usa '/api' (el proxy de Vite redirige a VITE_API_URL)
+// En producción: usa VITE_API_URL + '/api' directamente (no hay proxy)
+const baseURL = import.meta.env.PROD && import.meta.env.VITE_API_URL
+  ? `${import.meta.env.VITE_API_URL}/api`
+  : '/api';
+
 let axiosInstance: AxiosInstance | null = null;
 
 export const getAxiosInstance = (): AxiosInstance => {
   if (!axiosInstance) {
     axiosInstance = axios.create({
-      baseURL: '/api',
+      baseURL,
       timeout: 10000,
     });
 
