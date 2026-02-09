@@ -28,6 +28,7 @@ export default function CategoriesPage() {
       queryClient.invalidateQueries({ queryKey: ['categories'] });
       messageApi.success('Categoría creada exitosamente');
       setIsModalVisible(false);
+      setEditingCategory(null);
     },
     onError: (error: any) => {
       const errorMsg = error.response?.data?.error?.message || 'Error al crear categoría';
@@ -169,7 +170,10 @@ export default function CategoriesPage() {
       <ModalForm
         title={editingCategory ? 'Editar Categoría' : 'Nueva Categoría'}
         open={isModalVisible}
-        onOpenChange={setIsModalVisible}
+        onOpenChange={(open) => {
+          setIsModalVisible(open);
+          if (!open) setEditingCategory(null);
+        }}
         onFinish={async (values: Record<string, any>) => {
           if (editingCategory) {
             await updateMutation.mutateAsync({
@@ -186,6 +190,7 @@ export default function CategoriesPage() {
           return true;
         }}
         initialValues={editingCategory || {}}
+        modalProps={{ destroyOnClose: true }}
         layout="vertical"
         submitter={{
           submitButtonProps: {

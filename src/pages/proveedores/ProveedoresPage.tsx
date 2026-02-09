@@ -32,6 +32,7 @@ export default function ProveedoresPage() {
       queryClient.invalidateQueries({ queryKey: ['suppliers'] });
       messageApi.success('Proveedor creado exitosamente');
       setIsModalVisible(false);
+      setEditingSupplier(null);
     },
     onError: (error: any) => {
       const errorMsg = error.response?.data?.error?.message || 'Error al crear proveedor';
@@ -201,7 +202,10 @@ export default function ProveedoresPage() {
       <ModalForm
         title={editingSupplier ? 'Editar Proveedor' : 'Nuevo Proveedor'}
         open={isModalVisible}
-        onOpenChange={setIsModalVisible}
+        onOpenChange={(open) => {
+          setIsModalVisible(open);
+          if (!open) setEditingSupplier(null);
+        }}
         onFinish={async (values: any) => {
           if (editingSupplier) {
             await updateMutation.mutateAsync({
@@ -214,6 +218,7 @@ export default function ProveedoresPage() {
           return true;
         }}
         initialValues={editingSupplier || {}}
+        modalProps={{ destroyOnClose: true }}
         layout="vertical"
         submitter={{
           submitButtonProps: {

@@ -1,6 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import type { AxiosInstance } from 'axios';
 import type { ApiError } from '../types/models';
+import { useAuthStore } from '../store/authStore';
 
 // En desarrollo: usa '/api' (el proxy de Vite redirige a VITE_API_URL)
 // En producción: usa VITE_API_URL + '/api' directamente (no hay proxy)
@@ -19,7 +20,7 @@ export const getAxiosInstance = (): AxiosInstance => {
 
     axiosInstance.interceptors.request.use(
       (config) => {
-        const token = localStorage.getItem('token');
+        const token = useAuthStore.getState().token;
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
         }
@@ -33,8 +34,7 @@ export const getAxiosInstance = (): AxiosInstance => {
       (error: AxiosError<ApiError>) => {
         const isAuthEndpoint = error.config?.url?.startsWith('/auth/');
         if (error.response?.status === 401 && !isAuthEndpoint) {
-          localStorage.removeItem('token');
-          localStorage.removeItem('user');
+          useAuthStore.getState().logout();
           window.location.href = '/login';
         }
         return Promise.reject(error);

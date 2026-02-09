@@ -1,7 +1,7 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import LoginPage from '../pages/auth/LoginPage';
 import RegisterPage from '../pages/auth/RegisterPage';
-import ProtectedRoute from './ProtectedRoute';
+import ProtectedRoute, { AdminRoute } from './ProtectedRoute';
 import MainLayout from '../layouts/MainLayout';
 import DashboardPage from '../pages/dashboard/DashboardPage';
 import ProductosPage from '../pages/productos/ProductosPage';
@@ -43,21 +43,26 @@ export const router = createBrowserRouter([
             element: <ProductosPage />,
           },
           {
-            path: 'categorias',
-            element: <CategoriasPage />,
+            element: <AdminRoute />,
+            children: [
+              {
+                path: 'categorias',
+                element: <CategoriasPage />,
+              },
+              {
+                path: 'ubicaciones',
+                element: <LocationsPage />,
+              },
+              {
+                path: 'proveedores',
+                element: <ProveedoresPage />,
+              },
+              {
+                path: 'usuarios',
+                element: <UsersPage />,
+              },
+            ],
           },
-           {
-             path: 'ubicaciones',
-             element: <LocationsPage />,
-           },
-          {
-            path: 'proveedores',
-            element: <ProveedoresPage />,
-          },
-           {
-             path: 'usuarios',
-             element: <UsersPage />,
-           },
           {
             path: 'stock',
             element: <ProductLocationsPage />,

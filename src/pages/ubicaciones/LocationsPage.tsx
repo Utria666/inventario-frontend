@@ -28,6 +28,7 @@ export default function LocationsPage() {
       queryClient.invalidateQueries({ queryKey: ['locations'] });
       messageApi.success('Ubicación creada exitosamente');
       setIsModalVisible(false);
+      setEditingLocation(null);
     },
     onError: (error: any) => {
       const errorMsg = error.response?.data?.error?.message || 'Error al crear ubicación';
@@ -169,7 +170,10 @@ export default function LocationsPage() {
       <ModalForm
         title={editingLocation ? 'Editar Ubicación' : 'Nueva Ubicación'}
         open={isModalVisible}
-        onOpenChange={setIsModalVisible}
+        onOpenChange={(open) => {
+          setIsModalVisible(open);
+          if (!open) setEditingLocation(null);
+        }}
         onFinish={async (values: { name?: string; address?: string }) => {
           if (editingLocation) {
             await updateMutation.mutateAsync({
@@ -182,6 +186,7 @@ export default function LocationsPage() {
           return true;
         }}
         initialValues={editingLocation || {}}
+        modalProps={{ destroyOnClose: true }}
         layout="vertical"
         submitter={{
           submitButtonProps: {

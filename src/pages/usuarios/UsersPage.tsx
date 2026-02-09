@@ -31,6 +31,7 @@ export default function UsersPage() {
       setTempPassword(response.tempPassword);
       setShowPasswordModal(true);
       setIsModalVisible(false);
+      setEditingUser(null);
     },
     onError: (error: any) => {
       const errorMsg = error.response?.data?.error?.message || 'Error al crear usuario';
@@ -197,7 +198,10 @@ export default function UsersPage() {
       <ModalForm
         title={editingUser ? 'Editar Usuario' : 'Nuevo Usuario'}
         open={isModalVisible}
-        onOpenChange={setIsModalVisible}
+        onOpenChange={(open) => {
+          setIsModalVisible(open);
+          if (!open) setEditingUser(null);
+        }}
         onFinish={async (values: any) => {
           if (editingUser) {
             await updateMutation.mutateAsync({
@@ -216,6 +220,7 @@ export default function UsersPage() {
           return true;
         }}
         initialValues={editingUser || {}}
+        modalProps={{ destroyOnClose: true }}
         layout="vertical"
         submitter={{
           submitButtonProps: {
