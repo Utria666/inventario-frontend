@@ -446,7 +446,7 @@ function InventoryValueTab() {
       align: 'right' as const,
       render: (value: number) => (
         <span style={{ fontWeight: 600, color: '#52c41a', fontSize: 14 }}>
-          ${value.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+          ${value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
         </span>
       ),
       sorter: (a: InventoryValueByLocation, b: InventoryValueByLocation) =>

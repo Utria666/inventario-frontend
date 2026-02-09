@@ -30,9 +30,9 @@ const chartCardStyle: React.CSSProperties = {
 };
 
 function formatCurrency(value: number): string {
-  return new Intl.NumberFormat('es-DO', {
+  return new Intl.NumberFormat('en-US', {
     style: 'currency',
-    currency: 'DOP',
+    currency: 'USD',
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   }).format(value);
