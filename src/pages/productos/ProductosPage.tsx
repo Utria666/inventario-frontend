@@ -288,6 +288,7 @@ export default function ProductosPage() {
         dataSource={products}
         rowKey="id"
         loading={isLoading}
+        scroll={{ x: 1200 }}
         search={{
           labelWidth: 'auto',
         }}

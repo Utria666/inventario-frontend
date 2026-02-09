@@ -247,6 +247,7 @@ export default function ProductLocationsPage() {
         dataSource={productLocations}
         rowKey="id"
         loading={isLoading}
+        scroll={{ x: 1000 }}
         headerTitle="Stock por Ubicación"
         search={{
           labelWidth: 'auto',

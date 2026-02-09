@@ -146,6 +146,7 @@ function LowStockTab() {
       dataSource={sortedItems}
       rowKey="id"
       loading={isLoading}
+      scroll={{ x: 900 }}
       search={false}
       options={false}
       headerTitle={
@@ -397,6 +398,7 @@ function MovementHistoryTab() {
         dataSource={movements}
         rowKey="id"
         loading={isLoading}
+        scroll={{ x: 1100 }}
         search={false}
         options={false}
         headerTitle={

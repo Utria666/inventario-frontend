@@ -232,6 +232,7 @@ export default function MovimientosPage() {
         dataSource={movements}
         rowKey="id"
         loading={isLoading}
+        scroll={{ x: 1200 }}
         headerTitle="Movimientos de Inventario"
         search={{
           labelWidth: 'auto',

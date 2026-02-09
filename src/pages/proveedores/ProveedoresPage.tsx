@@ -171,6 +171,7 @@ export default function ProveedoresPage() {
         dataSource={suppliers}
         rowKey="id"
         loading={isLoading}
+        scroll={{ x: 970 }}
         search={{
           labelWidth: 'auto',
         }}
